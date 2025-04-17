@@ -1,56 +1,152 @@
-[
-    {
-      "Electronics": {
-        "Smartphone": [699.99, "Samsung"],
-        "Laptop": [999.99, "Dell"],
-        "Headphones": [199.99, "Sony"],
-        "Smartwatch": [249.99, "Apple"],
-        "Bluetooth Speaker": [89.99, "JBL"]
-      }
-    },
-    {
-      "Appliances": {
-        "Refrigerator": [1200.00, "LG"],
-        "Microwave": [250.00, "Panasonic"],
-        "Washing Machine": [899.00, "Samsung"],
-        "Air Conditioner": [1500.00, "Daikin"],
-        "Blender": [79.90, "Oster"]
-      }
-    },
-    {
-      "Foods": {
-        "Rice": [9.99, "Uncle Rice"],
-        "Bean": [5.65, "JL"],
-        "Pasta": [3.49, "Barilla"],
-        "Bread": [2.99, "Bimbo"],
-        "Cheese": [6.75, "La Vaca"]
-      }
-    },
-    {
-      "Cloths": {
-        "T-Shirt": [19.90, "H&M"],
-        "Jeans": [49.90, "Levi's"],
-        "Jacket": [89.99, "Zara"],
-        "Sneakers": [129.90, "Nike"],
-        "Cap": [15.00, "New Era"]
-      }
-    },
-    {
-      "Drinks": {
-        "Water": [1.50, "Evian"],
-        "Soda": [2.99, "Coca-Cola"],
-        "Juice": [4.25, "Tropicana"],
-        "Beer": [3.99, "Heineken"],
-        "Wine": [25.00, "Gallo"]
-      }
-    },
-    {
-      "Auto parts": {
-        "Brake Pads": [79.90, "Bosch"],
-        "Oil Filter": [25.00, "Fram"],
-        "Battery": [299.00, "ACDelco"],
-        "Tire": [150.00, "Michelin"],
-        "Headlight Bulb": [19.99, "Philips"]
-      }
-    }
-]
+{
+  "Smartphone": {
+    "price": 699.99,
+    "brand": "Samsung",
+    "recommendation": ["Smartwatch", "Laptop", "Headphones"]
+  },
+  "Laptop": {
+    "price": 999.99,
+    "brand": "Dell",
+    "recommendation": ["Smartphone", "Monitor", "Mouse"]
+  },
+  "Headphones": {
+    "price": 199.99,
+    "brand": "Sony",
+    "recommendation": ["Bluetooth Speaker", "Smartphone"]
+  },
+  "Smartwatch": {
+    "price": 249.99,
+    "brand": "Apple",
+    "recommendation": ["Smartphone", "Headphones"]
+  },
+  "Bluetooth Speaker": {
+    "price": 89.99,
+    "brand": "JBL",
+    "recommendation": ["Headphones", "Smartwatch"]
+  },
+  "Refrigerator": {
+    "price": 1200.0,
+    "brand": "LG",
+    "recommendation": ["Microwave", "Washing Machine"]
+  },
+  "Microwave": {
+    "price": 250.0,
+    "brand": "Panasonic",
+    "recommendation": ["Refrigerator", "Blender"]
+  },
+  "Washing Machine": {
+    "price": 899.0,
+    "brand": "Samsung",
+    "recommendation": ["Air Conditioner", "Refrigerator"]
+  },
+  "Air Conditioner": {
+    "price": 1500.0,
+    "brand": "Daikin",
+    "recommendation": ["Washing Machine", "Blender"]
+  },
+  "Blender": {
+    "price": 79.9,
+    "brand": "Oster",
+    "recommendation": ["Microwave", "Juice"]
+  },
+  "Rice": {
+    "price": 9.99,
+    "brand": "Uncle Rice",
+    "recommendation": ["Bean", "Pasta"]
+  },
+  "Bean": {
+    "price": 5.65,
+    "brand": "JL",
+    "recommendation": ["Rice", "Cheese"]
+  },
+  "Pasta": {
+    "price": 3.49,
+    "brand": "Barilla",
+    "recommendation": ["Cheese", "Bread"]
+  },
+  "Bread": {
+    "price": 2.99,
+    "brand": "Bimbo",
+    "recommendation": ["Cheese", "Juice"]
+  },
+  "Cheese": {
+    "price": 6.75,
+    "brand": "La Vaca",
+    "recommendation": ["Bread", "Wine"]
+  },
+  "T-Shirt": {
+    "price": 19.9,
+    "brand": "H&M",
+    "recommendation": ["Jeans", "Sneakers"]
+  },
+  "Jeans": {
+    "price": 49.9,
+    "brand": "Levi's",
+    "recommendation": ["T-Shirt", "Jacket"]
+  },
+  "Jacket": {
+    "price": 89.99,
+    "brand": "Zara",
+    "recommendation": ["Jeans", "Sneakers"]
+  },
+  "Sneakers": {
+    "price": 129.9,
+    "brand": "Nike",
+    "recommendation": ["T-Shirt", "Cap"]
+  },
+  "Cap": {
+    "price": 15.0,
+    "brand": "New Era",
+    "recommendation": ["Sneakers", "Jacket"]
+  },
+  "Water": {
+    "price": 1.5,
+    "brand": "Evian",
+    "recommendation": ["Juice", "Soda"]
+  },
+  "Soda": {
+    "price": 2.99,
+    "brand": "Coca-Cola",
+    "recommendation": ["Water", "Beer"]
+  },
+  "Juice": {
+    "price": 4.25,
+    "brand": "Tropicana",
+    "recommendation": ["Water", "Bread"]
+  },
+  "Beer": {
+    "price": 3.99,
+    "brand": "Heineken",
+    "recommendation": ["Soda", "Wine"]
+  },
+  "Wine": {
+    "price": 25.0,
+    "brand": "Gallo",
+    "recommendation": ["Cheese", "Beer"]
+  },
+  "Brake Pads": {
+    "price": 79.9,
+    "brand": "Bosch",
+    "recommendation": ["Tire", "Oil Filter"]
+  },
+  "Oil Filter": {
+    "price": 25.0,
+    "brand": "Fram",
+    "recommendation": ["Brake Pads", "Battery"]
+  },
+  "Battery": {
+    "price": 299.0,
+    "brand": "ACDelco",
+    "recommendation": ["Tire", "Brake Pads"]
+  },
+  "Tire": {
+    "price": 150.0,
+    "brand": "Michelin",
+    "recommendation": ["Brake Pads", "Battery"]
+  },
+  "Headlight Bulb": {
+    "price": 19.99,
+    "brand": "Philips",
+    "recommendation": ["Oil Filter", "Battery"]
+  }
+}

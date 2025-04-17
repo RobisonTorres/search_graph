@@ -1,0 +1,56 @@
+[
+    {
+      "Electronics": {
+        "Smartphone": [699.99, "Samsung"],
+        "Laptop": [999.99, "Dell"],
+        "Headphones": [199.99, "Sony"],
+        "Smartwatch": [249.99, "Apple"],
+        "Bluetooth Speaker": [89.99, "JBL"]
+      }
+    },
+    {
+      "Appliances": {
+        "Refrigerator": [1200.00, "LG"],
+        "Microwave": [250.00, "Panasonic"],
+        "Washing Machine": [899.00, "Samsung"],
+        "Air Conditioner": [1500.00, "Daikin"],
+        "Blender": [79.90, "Oster"]
+      }
+    },
+    {
+      "Foods": {
+        "Rice": [9.99, "Uncle Rice"],
+        "Bean": [5.65, "JL"],
+        "Pasta": [3.49, "Barilla"],
+        "Bread": [2.99, "Bimbo"],
+        "Cheese": [6.75, "La Vaca"]
+      }
+    },
+    {
+      "Cloths": {
+        "T-Shirt": [19.90, "H&M"],
+        "Jeans": [49.90, "Levi's"],
+        "Jacket": [89.99, "Zara"],
+        "Sneakers": [129.90, "Nike"],
+        "Cap": [15.00, "New Era"]
+      }
+    },
+    {
+      "Drinks": {
+        "Water": [1.50, "Evian"],
+        "Soda": [2.99, "Coca-Cola"],
+        "Juice": [4.25, "Tropicana"],
+        "Beer": [3.99, "Heineken"],
+        "Wine": [25.00, "Gallo"]
+      }
+    },
+    {
+      "Auto parts": {
+        "Brake Pads": [79.90, "Bosch"],
+        "Oil Filter": [25.00, "Fram"],
+        "Battery": [299.00, "ACDelco"],
+        "Tire": [150.00, "Michelin"],
+        "Headlight Bulb": [19.99, "Philips"]
+      }
+    }
+]

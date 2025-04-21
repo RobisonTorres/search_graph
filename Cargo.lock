@@ -8,6 +8,8 @@ version = "0.1.0"
 dependencies = [
  "serde",
  "serde_json",
+ "strsim",
+ "ucfirst",
 ]
 
 [[package]]
@@ -79,6 +81,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "strsim"
+version = "0.11.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7da8b5736845d9f2fcb837ea5d9e2628564b3b043a70948a3f0b778838c5fb4f"
+
+[[package]]
 name = "syn"
 version = "2.0.100"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -88,6 +96,12 @@ dependencies = [
  "quote",
  "unicode-ident",
 ]
+
+[[package]]
+name = "ucfirst"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "124ed7904f4e3df098859aa52ddafbe6112486e3ca34f8755684da5c3a7a7b48"
 
 [[package]]
 name = "unicode-ident"

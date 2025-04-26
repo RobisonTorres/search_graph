@@ -1,17 +1,18 @@
-use std::{io, io::BufReader, fs::File, collections::{HashMap, HashSet}};
+use std::{io, io::BufReader, fs::File};
+use std::collections::{HashMap, HashSet, VecDeque};
 use serde::{Serialize, Deserialize};
 use serde_json::to_writer_pretty;
 use strsim::levenshtein;
 use ucfirst::ucfirst;
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Product {
     pub price: f64,
     pub brand: String,
     pub category: String,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct TopLevel {
     #[serde(rename = "Product")]
     pub product: HashMap<String, Product>,
@@ -53,20 +54,16 @@ fn search_product_by_name(input_user: String) -> bool {
     // This function try to find a product by its exact name and prints its details if found.
     let data: TopLevel = read_json();
     let product_list: HashMap<String, Product> = data.product;
-    let recommendation_list: HashMap<String, HashSet<String>> = data.recommendation;
     if let Some(product) = product_list.get(&input_user) {
         println!("-----------------------------------");
         println!("Name: {}", input_user);
         println!("Price: ${:.2}", product.price);
         println!("Brand: {}", product.brand);
-        print!("\nSee also: ");
-        if let Some(recommendations) = recommendation_list.get(&input_user) {
-            for r in recommendations {
-                print!("{} ", r);
-            }
-        } else {
-            println!("No recommendations found for {}", input_user);
-        }      
+        print!("\nSee also: \n");
+        let product_recommendation = bfs_recommendations(input_user, data.recommendation);
+        for r in product_recommendation {
+            println!("- {}", r);
+        }
         println!("\n-----------------------------------");
         true
     } else { 
@@ -95,6 +92,33 @@ fn search_product_by_info(input_user: String) {
         search_product_by_name(spell_check);
     }   
     println!("-----------------------------------");
+}
+
+pub fn bfs_recommendations(start: String, graph: HashMap<String, HashSet<String>>) -> HashSet<String> {
+
+    // This function executes a BFS search on the "Recommendation" field to find related products.
+    let depth = 2;
+    let mut visited = HashSet::new();
+    let mut queue = VecDeque::new();
+    let mut recommendation = HashSet::new();
+    queue.push_back((start.to_string(), 0)); 
+    visited.insert(start.to_string()); 
+    while let Some((current, level)) = queue.pop_front() { 
+        if level > 0 {
+            recommendation.insert(current.clone());  
+        }
+        if level < depth {
+            if let Some(neighbors) = graph.get(&current) { 
+                for neighbor in neighbors {                         
+                    if !visited.contains(neighbor) {
+                        queue.push_back((neighbor.clone(), level + 1));
+                        visited.insert(neighbor.clone());  
+                    }
+                }
+            }
+        }
+    }
+    recommendation
 }
 
 fn suggest_correction(misspelled: String) -> String {

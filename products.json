@@ -39,6 +39,8 @@
     "Headphones": ["Bluetooth Speaker", "Smartphone"],
     "Smartwatch": ["Smartphone", "Headphones"],
     "Bluetooth Speaker": ["Headphones", "Smartwatch"],
+    "Mouse": ["Smartwatch"],
+    "Monitor": ["Headphones", "Smartwatch", "Mouse"],
     "Refrigerator": ["Microwave", "Washing Machine"],
     "Microwave": ["Refrigerator", "Blender"],
     "Washing Machine": ["Air Conditioner", "Refrigerator"],

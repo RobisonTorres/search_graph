@@ -1,7 +1,6 @@
 use std::{io, io::BufReader, fs::File};
 use std::collections::{HashMap, HashSet, VecDeque};
 use serde::{Serialize, Deserialize};
-use serde_json::to_writer_pretty;
 use strsim::levenshtein;
 use ucfirst::ucfirst;
 
@@ -33,7 +32,7 @@ pub fn take_input_user() -> String {
 
     // This function takes user's input.
     println!("-----------------------------------");
-    println!("Search for product...");
+    println!("--------Search for product---------");
     let mut input: String = String::new();
     io::stdin().read_line(&mut input) 
         .expect("Unable to read Stdin");
@@ -41,26 +40,25 @@ pub fn take_input_user() -> String {
     input.to_string()
 }
 
-pub fn search_module(input_user: String) {
+pub fn search_module(data: &TopLevel, input_user: &str) {
 
     // This function attempts to find a product by its name. If not found, searches by brand or category.
-    if !search_product_by_name(input_user.clone()) {
-        search_product_by_info(input_user);
+    if !search_product_by_name(&data, input_user) {
+        search_product_by_info(&data, input_user);
     }
 }
 
-fn search_product_by_name(input_user: String) -> bool {
+fn search_product_by_name(data: &TopLevel, input_user: &str) -> bool {
 
-    // This function try to find a product by its exact name and prints its details if found.
-    let data: TopLevel = read_json();
-    let product_list: HashMap<String, Product> = data.product;
-    if let Some(product) = product_list.get(&input_user) {
+    // This function tries to find a product by its exact name and prints its details if found.
+    let product_list: &HashMap<String, Product> = &data.product;
+    if let Some(product) = product_list.get(input_user) {
         println!("-----------------------------------");
         println!("Name: {}", input_user);
         println!("Price: ${:.2}", product.price);
         println!("Brand: {}", product.brand);
         print!("\nSee also: \n");
-        let product_recommendation = bfs_recommendations(input_user, data.recommendation);
+        let product_recommendation = bfs_recommendations(input_user, &data.recommendation);
         for r in product_recommendation {
             println!("- {}", r);
         }
@@ -71,12 +69,11 @@ fn search_product_by_name(input_user: String) -> bool {
     }    
 }    
 
-fn search_product_by_info(input_user: String) {
+fn search_product_by_info(data: &TopLevel, input_user: &str) {
 
     // This function searches for products based on brand or category and prints matching product names.
-    let data: TopLevel = read_json();
     let mut found = false;
-    println!("\nProducts related for: '{}'", input_user);
+    println!("\nProducts related to: '{}'", input_user);
     for product_find in data.product.keys() {
         if let Some(product) = data.product.get(product_find) {
             if input_user == product.brand || input_user == product.category { 
@@ -87,14 +84,14 @@ fn search_product_by_info(input_user: String) {
     }
     if !found {
         println!("\nNo products found matching '{}'", input_user);
-        let spell_check = suggest_correction(input_user);
+        let spell_check = suggest_correction(data, input_user.to_string());
         println!("Did you mean {}?", spell_check);
-        search_product_by_name(spell_check);
+        search_product_by_name(data, &spell_check);
     }   
     println!("-----------------------------------");
 }
 
-pub fn bfs_recommendations(start: String, graph: HashMap<String, HashSet<String>>) -> HashSet<String> {
+pub fn bfs_recommendations(start: &str, graph: &HashMap<String, HashSet<String>>) -> HashSet<String> {
 
     // This function executes a BFS search on the "Recommendation" field to find related products.
     let depth = 2;
@@ -121,34 +118,11 @@ pub fn bfs_recommendations(start: String, graph: HashMap<String, HashSet<String>
     recommendation
 }
 
-fn suggest_correction(misspelled: String) -> String {
+fn suggest_correction(data: &TopLevel, misspelled: String) -> String {
     
     // This function finds the correct word based on the minimum Levenshtein distance.
-    let data: TopLevel = read_json();
     let dictionary = data.product.keys();
     dictionary
         .min_by_key(|word| levenshtein(&misspelled, word))
         .unwrap_or(&misspelled).to_string()
-}
-
-pub fn add_to_cart(input_user: String) -> HashSet<String> {
-    
-    // This function adds new recommendations.
-    let mut new_recommendation = HashSet::new();
-    new_recommendation.insert(input_user);
-    new_recommendation
-}   
-
-pub fn write_json() -> Result<(), Box<dyn std::error::Error>> {
-
-    // This function updates the json file on recommendation field.
-    let mut data: TopLevel = read_json();
-    let product_key = "Smartphone".to_string();
-    if let Some(product) = data.recommendation.get_mut(&product_key) {
-        product.insert("Justice".to_string());
-    }
-    let updated_file = File::create("products.json")?;
-    to_writer_pretty(updated_file, &data)?;
-    println!("Product updated and saved.");
-    Ok(())
 }

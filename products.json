@@ -5,6 +5,8 @@
     "Headphones": {"price": 199.99, "brand": "Sony", "category": "Electronics"},
     "Smartwatch": {"price": 249.99, "brand": "Apple", "category": "Electronics"},
     "Bluetooth Speaker": {"price": 89.99, "brand": "JBL", "category": "Electronics"},
+    "Monitor": {"price": 249.99, "brand": "LG", "category": "Electronics"},
+    "Mouse": {"price": 49.99, "brand": "Logitech", "category": "Electronics"},
     "Refrigerator": {"price": 1200.0, "brand": "LG", "category": "Home Appliances"},
     "Microwave": {"price": 250.0, "brand": "Panasonic", "category": "Home Appliances"},
     "Washing Machine": {"price": 899.0, "brand": "Samsung", "category": "Home Appliances"},

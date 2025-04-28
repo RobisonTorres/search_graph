@@ -2,7 +2,7 @@ use std::{io, io::BufReader, fs::File};
 use std::collections::{HashMap, HashSet, VecDeque};
 use serde::{Serialize, Deserialize};
 use strsim::levenshtein;
-use ucfirst::ucfirst;
+use inflector::cases::titlecase::to_title_case;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Product {
@@ -36,15 +36,18 @@ pub fn take_input_user() -> String {
     let mut input: String = String::new();
     io::stdin().read_line(&mut input) 
         .expect("Unable to read Stdin");
-    let input = ucfirst(input.trim());
+    let input = to_title_case(input.trim());
     input.to_string()
 }
 
 pub fn search_module(data: &TopLevel, input_user: &str) {
 
-    // This function attempts to find a product by its name. If not found, searches by brand or category.
+    // This function tries to find a product by name first. If not found by name, tries to find by 
+    // brand or category. If not found, suggests a correction and tries name search again.
     if !search_product_by_name(&data, input_user) {
-        search_product_by_info(&data, input_user);
+        if !search_product_by_info(&data, input_user) {
+            search_product_by_name(&data, &suggest_correction(&data, input_user.to_string()));
+        } 
     }
 }
 
@@ -69,7 +72,7 @@ fn search_product_by_name(data: &TopLevel, input_user: &str) -> bool {
     }    
 }    
 
-fn search_product_by_info(data: &TopLevel, input_user: &str) {
+fn search_product_by_info(data: &TopLevel, input_user: &str) -> bool {
 
     // This function searches for products based on brand or category and prints matching product names.
     let mut found = false;
@@ -82,16 +85,10 @@ fn search_product_by_info(data: &TopLevel, input_user: &str) {
             }
         }  
     }
-    if !found {
-        println!("\nNo products found matching '{}'", input_user);
-        let spell_check = suggest_correction(data, input_user.to_string());
-        println!("Did you mean {}?", spell_check);
-        search_product_by_name(data, &spell_check);
-    }   
-    println!("-----------------------------------");
+    found
 }
 
-pub fn bfs_recommendations(start: &str, graph: &HashMap<String, HashSet<String>>) -> HashSet<String> {
+fn bfs_recommendations(start: &str, graph: &HashMap<String, HashSet<String>>) -> HashSet<String> {
 
     // This function executes a BFS search on the "Recommendation" field to find related products.
     let depth = 2;
@@ -122,7 +119,14 @@ fn suggest_correction(data: &TopLevel, misspelled: String) -> String {
     
     // This function finds the correct word based on the minimum Levenshtein distance.
     let dictionary = data.product.keys();
-    dictionary
+    let corrected_typo = dictionary
         .min_by_key(|word| levenshtein(&misspelled, word))
-        .unwrap_or(&misspelled).to_string()
+        .unwrap_or(&misspelled).to_string();
+    println!("\nNo matching. Did you mean {}?", corrected_typo);
+    println!("-----------------------------------");
+    corrected_typo
 }
+
+#[cfg(test)]
+#[path = "./tests.rs"]
+mod tests;

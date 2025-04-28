@@ -51,7 +51,7 @@ pub fn search_module(data: &TopLevel, input_user: &str) {
     }
 }
 
-fn search_product_by_name(data: &TopLevel, input_user: &str) -> bool {
+pub fn search_product_by_name(data: &TopLevel, input_user: &str) -> bool {
 
     // This function tries to find a product by its exact name and prints its details if found.
     let product_list: &HashMap<String, Product> = &data.product;
@@ -88,7 +88,7 @@ fn search_product_by_info(data: &TopLevel, input_user: &str) -> bool {
     found
 }
 
-fn bfs_recommendations(start: &str, graph: &HashMap<String, HashSet<String>>) -> HashSet<String> {
+pub fn bfs_recommendations(start: &str, graph: &HashMap<String, HashSet<String>>) -> HashSet<String> {
 
     // This function executes a BFS search on the "Recommendation" field to find related products.
     let depth = 2;
@@ -115,7 +115,7 @@ fn bfs_recommendations(start: &str, graph: &HashMap<String, HashSet<String>>) ->
     recommendation
 }
 
-fn suggest_correction(data: &TopLevel, misspelled: String) -> String {
+pub fn suggest_correction(data: &TopLevel, misspelled: String) -> String {
     
     // This function finds the correct word based on the minimum Levenshtein distance.
     let dictionary = data.product.keys();

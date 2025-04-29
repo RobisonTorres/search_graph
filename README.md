@@ -58,6 +58,8 @@ This project implements an optimized search and recommendation system in Rust th
    cargo build
    ```
 
+If the build fails, temporarily disable your antivirus software and try again, as it may interfere with the build process.
+
 3. Run the tests:
    ```sh
    cargo test
